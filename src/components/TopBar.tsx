@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Volume2, VolumeX, Settings2, CloudCheck, HardDrive, CloudAlert, RefreshCw, LogIn, User } from "lucide-react";
+import { Volume2, VolumeX, Settings2, CloudCheck, HardDrive, CloudAlert, RefreshCw, LogIn, User, School } from "lucide-react";
 import { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Switch } from "@/components/ui/switch";
@@ -128,13 +128,17 @@ export function SettingsDialog() {
 export function TopBar({ minimal = false }: { minimal?: boolean }) {
   const { user } = useUser();
   return (
-    <header className="relative z-20 flex flex-wrap items-center justify-between gap-3 px-4 py-3 md:px-8">
-      <Link to="/" className="flex min-h-14 items-center gap-3 rounded-2xl">
-        <span className="font-display text-xl font-extrabold leading-tight md:text-2xl">Khu Vườn Tri Thức</span>
+    <header className="storybook-header relative z-20">
+      <Link to="/" className="school-pill" aria-label="Trang chủ Trường Mầm Non Tô Hiến Thành">
+        <span className="school-pill__seal"><School aria-hidden size={28} /></span>
+        <span>TRƯỜNG MẦM NON<br /><strong>TÔ HIẾN THÀNH</strong></span>
       </Link>
-      <div className="flex flex-wrap items-center gap-2">
+      <Link to="/" className="storybook-wordmark" aria-label="Khu Vườn Tri Thức">
+        <span>Khu</span><span>Vườn</span><span>Tri</span><span>Thức</span>
+      </Link>
+      <div className="storybook-header__tools">
         {!minimal && (
-          <nav className="hidden items-center gap-1 md:flex" aria-label="Điều hướng">
+          <nav className="hidden items-center gap-1 lg:flex" aria-label="Điều hướng">
             {(
               [
                 ["/adventures", "Phiêu lưu"],
@@ -143,16 +147,16 @@ export function TopBar({ minimal = false }: { minimal?: boolean }) {
                 ["/about", "Giới thiệu"],
               ] as const
             ).map(([to, label]) => (
-              <Link key={to} to={to} className="flex min-h-14 items-center rounded-2xl px-3 font-bold hover:bg-muted" activeProps={{ className: "bg-muted" }}>
+              <Link key={to} to={to} className="flex min-h-14 items-center rounded-2xl px-3 font-bold hover:bg-white/80" activeProps={{ className: "bg-white/80" }}>
                 {label}
               </Link>
             ))}
           </nav>
         )}
-        <SyncBadge />
+        <span className="storybook-header__sync"><SyncBadge /></span>
         <SoundToggle />
         <SettingsDialog />
-        <Link to="/auth" className="flex h-14 w-14 items-center justify-center rounded-3xl border-2 border-border bg-card tactile" aria-label={user ? "Tài khoản" : "Đăng nhập người lớn"}>
+        <Link to="/auth" className="storybook-avatar tactile" aria-label={user ? "Tài khoản" : "Đăng nhập người lớn"}>
           {user ? <User aria-hidden /> : <LogIn aria-hidden />}
         </Link>
       </div>

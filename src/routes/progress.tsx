@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { TopBar } from "@/components/TopBar";
+import { BottomDock } from "@/components/BottomDock";
 import { WordArt } from "@/components/WordArt";
 import { Panel } from "@/components/kit";
 import { ADVENTURES, STAGES } from "@/lib/content";
@@ -13,9 +14,9 @@ export const Route = createFileRoute("/progress")({
 function ProgressPage() {
   const { state } = useProgress();
   return (
-    <div className="min-h-[100dvh] bg-sky-gradient">
+    <div className="storybook-page min-h-[100dvh] bg-sky-gradient">
       <TopBar />
-      <main className="mx-auto max-w-4xl space-y-4 px-4 pb-12">
+      <main className="mx-auto max-w-4xl space-y-4 px-4 pb-32">
         <h1 className="text-4xl font-extrabold">Tiến trình đã lưu</h1>
         <p>Chỉ hiển thị dữ liệu thật đã ghi lại. “Đã gặp” không có nghĩa là đã thành thạo.</p>
         {ADVENTURES.map((a) => {
@@ -36,6 +37,7 @@ function ProgressPage() {
           );
         })}
       </main>
+      <BottomDock />
     </div>
   );
 }
