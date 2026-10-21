@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Volume2, VolumeX, Settings2, CloudCheck, HardDrive, CloudAlert, RefreshCw, LogIn, User, School } from "lucide-react";
+import { Volume2, VolumeX, Settings2, CloudCheck, HardDrive, CloudAlert, RefreshCw, LogIn, User } from "lucide-react";
 import { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Switch } from "@/components/ui/switch";
@@ -130,7 +130,7 @@ export function TopBar({ minimal = false }: { minimal?: boolean }) {
   return (
     <header className="storybook-header relative z-20">
       <Link to="/" className="school-pill" aria-label="Trang chủ Trường Mầm Non Tô Hiến Thành">
-        <span className="school-pill__seal"><School aria-hidden size={28} /></span>
+        <span className="school-pill__seal"><img src="/school-logo.jpg" alt="" /></span>
         <span>TRƯỜNG MẦM NON<br /><strong>TÔ HIẾN THÀNH</strong></span>
       </Link>
       <Link to="/" className="storybook-wordmark" aria-label="Khu Vườn Tri Thức">
