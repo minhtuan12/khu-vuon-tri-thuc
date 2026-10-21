@@ -199,7 +199,7 @@ export function LessonPlayer({ adventure, plan, classroom = false }: { adventure
   const missing = (["vi", "en"] as const).filter((l) => voice[l] === "missing" || voice[l] === "unsupported");
 
   return (
-    <div className={cn("relative flex min-h-[100dvh] flex-col bg-sky-gradient", classroom && "pb-28")}>
+    <div className={cn("storybook-lesson relative flex min-h-[100dvh] flex-col bg-sky-gradient", classroom && "pb-28")}>
       {/* Garden — the remembered moment: it transforms as the child learns */}
       <div className="pointer-events-auto absolute inset-0 z-0">
         <GardenScene bloom={bloom} revealed={sceneWords} adventure={adventure.id} onTapWord={type === "scene" ? (id) => { const w = adventure.words.find((x) => x.id === id)!; say([{ text: w.en, lang: "en" }, { text: w.sentence, lang: "en" }]); } : () => {}} />
@@ -231,6 +231,9 @@ export function LessonPlayer({ adventure, plan, classroom = false }: { adventure
       )}
 
       <main className="relative z-10 flex flex-1 flex-col items-center justify-end gap-4 px-4 pb-6 md:px-8">
+        {(type === "intro" || type === "scene") && (
+          <img className="lesson-illustration" src={`/illustrations/${adventure.id === "garden" ? "garden" : adventure.id === "colors" ? "colors" : "animals"}-card.webp`} alt="" aria-hidden="true" />
+        )}
         {/* Mascot + speech bubble */}
         <div className="flex w-full max-w-4xl items-end gap-3">
           <Mascot mood={mood} talking={speaking} className="h-28 w-24 shrink-0 animate-float md:h-40 md:w-36" />

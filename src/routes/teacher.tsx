@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import { toast } from "sonner";
 import { TopBar } from "@/components/TopBar";
+import { BottomDock } from "@/components/BottomDock";
 import { BigButton, Panel } from "@/components/kit";
 import { ADVENTURES, AGE_LABELS, getAdventure, type AdventureId, type AgeBand } from "@/lib/content";
 import { deterministicPlan, saveClassPlan, type Duration, type LessonPlan } from "@/lib/plan";
@@ -53,9 +54,9 @@ function Teacher() {
 
   const active = proposal ?? deterministicPlan(req, "default");
   return (
-    <div className="min-h-[100dvh] bg-sky-gradient">
+    <div className="storybook-page min-h-[100dvh] bg-sky-gradient">
       <TopBar />
-      <main className="mx-auto max-w-5xl space-y-5 px-4 pb-12">
+      <main className="mx-auto max-w-5xl space-y-5 px-4 pb-32">
         <h1 className="text-4xl font-extrabold">Khu vực giáo viên</h1>
         <Panel className="space-y-4">
           <Choice label="Chuyến phiêu lưu" value={adventureId} set={(v) => { setAdv(v); setProposal(null); }} opts={ADVENTURES.map((a) => [a.id, a.title])} />
@@ -87,6 +88,7 @@ function Teacher() {
 
         {user ? <Observations adventureId={adventureId} /> : <Panel><p>Đăng nhập để ghi quan sát cho từng bé (chỉ bạn xem được).</p></Panel>}
       </main>
+      <BottomDock />
     </div>
   );
 }

@@ -1,21 +1,17 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { ArrowRight, BookOpen, Heart, Sparkles } from "lucide-react";
 import { TopBar } from "@/components/TopBar";
-import { GardenScene } from "@/components/GardenScene";
-import { Mascot } from "@/components/Mascot";
-import { WordArt } from "@/components/WordArt";
-import { bigButton } from "@/components/kit";
+import { AdventureCard } from "@/components/AdventureCard";
+import { BottomDock } from "@/components/BottomDock";
 import { ADVENTURES } from "@/lib/content";
 import { useProgress } from "@/lib/progress";
 
 export const Route = createFileRoute("/")({
-  head: () => ({
-    meta: [
-      { title: "Khu Vườn Tri Thức — Trường Mầm Non Tô Hiến Thành" },
-      { name: "description", content: "Bé 3–6 tuổi cùng bạn Mầm đánh thức khu vườn bằng tiếng Anh." },
-      { property: "og:title", content: "Khu Vườn Tri Thức" },
-      { property: "og:description", content: "Khu vườn truyện tranh học tiếng Anh cho bé mầm non." },
-    ],
-  }),
+  head: () => ({ meta: [
+    { title: "Khu Vườn Tri Thức — Trường Mầm Non Tô Hiến Thành" },
+    { name: "description", content: "Bé cùng khám phá tiếng Anh qua những chuyến phiêu lưu đầy sắc màu." },
+    { property: "og:title", content: "Khu Vườn Tri Thức" },
+  ] }),
   component: Index,
 });
 
@@ -23,29 +19,33 @@ function Index() {
   const { state } = useProgress();
   const resume = ADVENTURES.find((a) => { const p = state.items[a.id]; return p && p.stage > 0 && p.stage < 5; });
   return (
-    <div className="relative min-h-[100dvh] overflow-hidden bg-sky-gradient">
-      <div className="absolute inset-x-0 bottom-0 h-[55vh]"><GardenScene bloom={0.7} revealed={["sun"]} /></div>
+    <div className="story-world story-home">
       <TopBar />
-      <main className="relative z-10 mx-auto flex max-w-5xl flex-col items-center px-4 pt-4 text-center">
-        <p className="rounded-full bg-card px-4 py-1.5 font-bold shadow-soft">Trường Mầm Non Tô Hiến Thành</p>
-        <h1 className="mt-3 text-5xl font-extrabold leading-none md:text-7xl">Khu Vườn Tri Thức</h1>
-        <Mascot className="mt-2 h-36 w-32 animate-float" />
-        <Link to="/adventures" className={bigButton({ size: "xl", variant: "sun" })}>Cùng khám phá</Link>
-        {resume && (
-          <Link to="/learn/$id" params={{ id: resume.id }} className={bigButton({ size: "md", variant: "leaf", className: "mt-3" })}>
-            Tiếp tục: {resume.title}
-          </Link>
-        )}
-        <div className="mt-6 grid w-full gap-3 sm:grid-cols-3">
-          {ADVENTURES.map((a) => (
-            <Link key={a.id} to="/learn/$id" params={{ id: a.id }} className="tactile flex items-center gap-3 rounded-4xl bg-card p-4 text-left">
-              <WordArt id={a.words[0]!.id} className="h-14 w-14" />
-              <span><span className="block font-display text-xl font-bold">{a.title}</span><span className="text-sm">{a.subtitle}</span></span>
-            </Link>
-          ))}
-        </div>
-        <Link to="/teacher" className="mt-4 mb-10 min-h-14 rounded-2xl bg-card/80 px-4 py-3 font-bold underline">Dành cho giáo viên & phụ huynh</Link>
+      <main className="story-layout">
+        <h1 className="sr-only">Khu Vườn Tri Thức — cùng bé học tiếng Anh</h1>
+        <section className="story-hero" aria-labelledby="hero-welcome">
+          <div className="story-hero__bubble">
+            <span className="story-hero__sparkle"><Sparkles aria-hidden size={28} /></span>
+            <div><h2 id="hero-welcome">Chào mừng các bé!</h2><p>Hôm nay mình cùng bước vào một chuyến phiêu lưu tiếng Anh nhé!</p></div>
+          </div>
+          <div className="story-hero__actions">
+            <Link className="story-hero__cta" to="/adventures">Cùng khám phá <ArrowRight size={23} aria-hidden /></Link>
+            {resume && <Link className="story-hero__resume" to="/learn/$id" params={{ id: resume.id }}>Tiếp tục: {resume.title}</Link>}
+          </div>
+        </section>
+
+        <section aria-labelledby="adventures-title" className="story-section">
+          <div className="story-section__head"><h2 id="adventures-title">Ba thế giới đang chờ bé</h2><span>Chọn một câu chuyện để bắt đầu</span></div>
+          <div className="adventure-grid">{ADVENTURES.map((a) => <AdventureCard key={a.id} adventure={a} />)}</div>
+        </section>
+
+        <section className="quick-grid" aria-label="Dành cho cô và gia đình">
+          <Link to="/teacher" className="quick-card quick-card--teacher"><span className="quick-card__icon"><BookOpen aria-hidden /></span><span><strong>Học cùng cô</strong><small>Chuẩn bị bài · Dẫn lớp</small></span><ArrowRight aria-hidden size={20} /></Link>
+          <Link to="/progress" className="quick-card quick-card--progress"><span className="quick-card__icon"><Sparkles aria-hidden /></span><span><strong>Vườn của bé</strong><small>Những điều bé đã khám phá</small></span><ArrowRight aria-hidden size={20} /></Link>
+          <Link to="/about" className="quick-card quick-card--parent"><span className="quick-card__icon"><Heart aria-hidden /></span><span><strong>Góc phụ huynh</strong><small>Cùng bé học trong ngày</small></span><ArrowRight aria-hidden size={20} /></Link>
+        </section>
       </main>
+      <BottomDock />
     </div>
   );
 }

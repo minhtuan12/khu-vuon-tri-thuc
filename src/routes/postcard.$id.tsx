@@ -20,10 +20,11 @@ function Postcard() {
   const seen = state.items[a.id]?.wordsSeen ?? [];
   const words = a.words.filter((w) => seen.includes(w.id));
   return (
-    <div className="min-h-[100dvh] bg-sky-gradient">
+    <div className="storybook-page min-h-[100dvh] bg-sky-gradient">
       <TopBar />
       <main className="mx-auto max-w-3xl px-4 pb-12">
         <article className="rounded-4xl border-8 border-sun bg-card p-6 shadow-soft">
+          <img className="postcard-art" src={`/illustrations/${a.id === "garden" ? "garden" : a.id === "colors" ? "colors" : "animals"}-card.webp`} alt="" />
           <div className="flex items-center gap-4"><Mascot mood="cheer" className="h-28 w-24" /><div><p className="font-bold">Bưu thiếp từ khu vườn</p><h1 className="text-3xl font-extrabold">{a.title}</h1></div></div>
           <h2 className="mt-4 text-xl font-bold">Các từ bé đã gặp</h2>
           {words.length === 0 ? <p>Bé chưa gặp từ nào trong chuyến này. <Link className="underline" to="/learn/$id" params={{ id: a.id }}>Bắt đầu chơi</Link></p> : (

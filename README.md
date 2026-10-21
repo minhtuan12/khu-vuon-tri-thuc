@@ -2,6 +2,10 @@
 
 Khu vườn truyện tranh giúp bé 3–6 tuổi làm quen tiếng Anh qua nghe, chọn hình, vận động và nhớ lại. Có khu vực cho giáo viên/phụ huynh.
 
+## Giao diện hoạt hình
+
+Trang chủ và danh sách bài học dùng cảnh trường học, nhân vật và thẻ minh họa gốc trong `public/illustrations/`. Ảnh được nén WebP để tải nhanh; văn bản, nút bấm và trạng thái vẫn là HTML có thể chọn và đọc bằng công cụ hỗ trợ. Màu sắc, độ bo góc, kiểu chữ và bố cục đáp ứng màn hình nhỏ được mô tả trong `DESIGN.md` và `src/styles.css`.
+
 ## Cài đặt
 
 ```bash
