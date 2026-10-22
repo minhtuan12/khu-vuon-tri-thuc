@@ -15,6 +15,7 @@ import { Route as AdventuresRouteImport } from './routes/adventures'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as ProgressRouteImport } from './routes/progress'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
+import { Route as RoadmapRouteImport } from './routes/roadmap'
 import { Route as TeacherRouteImport } from './routes/teacher'
 import { Route as LearnIdRouteImport } from './routes/learn.$id'
 import { Route as PostcardIdRouteImport } from './routes/postcard.$id'
@@ -49,6 +50,11 @@ const ResetPasswordRoute = ResetPasswordRouteImport.update({
   path: '/reset-password',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RoadmapRoute = RoadmapRouteImport.update({
+  id: '/roadmap',
+  path: '/roadmap',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TeacherRoute = TeacherRouteImport.update({
   id: '/teacher',
   path: '/teacher',
@@ -72,6 +78,7 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/progress': typeof ProgressRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/roadmap': typeof RoadmapRoute
   '/teacher': typeof TeacherRoute
   '/learn/$id': typeof LearnIdRoute
   '/postcard/$id': typeof PostcardIdRoute
@@ -83,6 +90,7 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/progress': typeof ProgressRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/roadmap': typeof RoadmapRoute
   '/teacher': typeof TeacherRoute
   '/learn/$id': typeof LearnIdRoute
   '/postcard/$id': typeof PostcardIdRoute
@@ -95,6 +103,7 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/progress': typeof ProgressRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/roadmap': typeof RoadmapRoute
   '/teacher': typeof TeacherRoute
   '/learn/$id': typeof LearnIdRoute
   '/postcard/$id': typeof PostcardIdRoute
@@ -108,6 +117,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/progress'
     | '/reset-password'
+    | '/roadmap'
     | '/teacher'
     | '/learn/$id'
     | '/postcard/$id'
@@ -119,6 +129,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/progress'
     | '/reset-password'
+    | '/roadmap'
     | '/teacher'
     | '/learn/$id'
     | '/postcard/$id'
@@ -130,6 +141,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/progress'
     | '/reset-password'
+    | '/roadmap'
     | '/teacher'
     | '/learn/$id'
     | '/postcard/$id'
@@ -142,6 +154,7 @@ export interface RootRouteChildren {
   AuthRoute: typeof AuthRoute
   ProgressRoute: typeof ProgressRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
+  RoadmapRoute: typeof RoadmapRoute
   TeacherRoute: typeof TeacherRoute
   LearnIdRoute: typeof LearnIdRoute
   PostcardIdRoute: typeof PostcardIdRoute
@@ -191,6 +204,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ResetPasswordRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/roadmap': {
+      id: '/roadmap'
+      path: '/roadmap'
+      fullPath: '/roadmap'
+      preLoaderRoute: typeof RoadmapRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/teacher': {
       id: '/teacher'
       path: '/teacher'
@@ -222,6 +242,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthRoute: AuthRoute,
   ProgressRoute: ProgressRoute,
   ResetPasswordRoute: ResetPasswordRoute,
+  RoadmapRoute: RoadmapRoute,
   TeacherRoute: TeacherRoute,
   LearnIdRoute: LearnIdRoute,
   PostcardIdRoute: PostcardIdRoute,

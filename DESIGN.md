@@ -28,7 +28,7 @@ components:
 
 Khu Vườn Tri Thức is a luminous illustrated preschool world, inspired by the reference's cyan sky, soft rendered chibi children, lush grass, rounded cards and buoyant color. It is still an English learning product: the child can start an adventure immediately. The single memorable image is a classroom garden that comes alive as words are encountered.
 
-The school name appears as text in a white pill. The flower/school icon is decorative and is not represented as the school's official logo. Never recreate the reference's unrelated categories or bake copy into raster art.
+The school name appears beside the supplied official logo (`public/school-logo.jpg`) in a white pill. Reuse the exact asset; never redraw the logo or bake interface copy into raster art.
 
 ## Colors
 
@@ -57,6 +57,18 @@ Characters, scenery and cards use generous rounded silhouettes. Pills are used f
 ## Do's and Don'ts
 
 - Use original chibi illustrations inspired by the reference's visual medium and palette.
-- Keep actual school identity as text until an official logo asset is supplied.
+- Keep the supplied official school logo and existing school-name text together.
 - Preserve existing lessons, voice, persistence and AI behavior during visual changes.
 - Do not replace game choices with non-interactive images or claim word mastery from a tap.
+
+## Learning experiences
+
+The adult preparation area uses the same sky/leaf palette with quieter panels. Story and review choices use yellow/lavender illustrated cards, while the child player retains Mầm and the six-stage garden. Preview opens in the canonical dialog without changing real progress or opening a new tab. New scene art is decorative only; controls, text and interactive objects stay in HTML/SVG. Source: the implementation plan approved on 2026-10-22.
+
+## Learning roadmap
+
+`/roadmap` adds a stepping-stone path through three gardens. The signature is a dotted trail joining four large illustrated vocabulary stones, staggered across desktop and alternating vertically on mobile. No locked lessons, leaderboard or streak pressure. Completed experiences bloom as flowers; this is participation, not a proficiency score. Reuse the existing garden artwork.
+
+Runtime mapping remains Model B: `src/styles.css` palette/font variables → `src/roadmap.css` layout/state styles → roadmap and RoadmapLesson. No independent palette. Shared Dialog, Select, BigButton and WordArt own their interactions. BottomDock now has five destinations with a dedicated Lộ trình entry.
+
+User-requested evolution (2026-10-22): all spoken output is English, preferring identifiable installed female voices. Vietnamese remains for navigation/adult explanations and existing approved story captions. Roadmap activities use short English directions and an adult-consented browser microphone turn: generous word matching gives encouraging “Wonderful!” or “Try again!” feedback, but is never presented as a pronunciation score.

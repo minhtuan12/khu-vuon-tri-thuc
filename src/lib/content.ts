@@ -49,15 +49,54 @@ export const ADVENTURES: Adventure[] = [
       "Chào bé! Mình là Mầm. Khu vườn đang ngủ say. Bé hãy nghe tiếng Anh và chọn đúng hình để đánh thức khu vườn nhé!",
     sceneVi: "Khu vườn đã thức dậy rồi! Bé chạm vào từng bạn để nghe lại nhé.",
     words: [
-      { id: "sun", en: "sun", vi: "mặt trời", sentence: "The sun is shining.", sentenceVi: "Mặt trời đang chiếu sáng." },
-      { id: "rain", en: "rain", vi: "mưa", sentence: "The rain is falling.", sentenceVi: "Mưa đang rơi." },
-      { id: "rabbit", en: "rabbit", vi: "con thỏ", sentence: "The rabbit can hop.", sentenceVi: "Con thỏ nhảy được." },
-      { id: "apple", en: "apple", vi: "quả táo", sentence: "I like the red apple.", sentenceVi: "Bé thích quả táo đỏ." },
+      {
+        id: "sun",
+        en: "sun",
+        vi: "mặt trời",
+        sentence: "The sun is shining.",
+        sentenceVi: "Mặt trời đang chiếu sáng.",
+      },
+      {
+        id: "rain",
+        en: "rain",
+        vi: "mưa",
+        sentence: "The rain is falling.",
+        sentenceVi: "Mưa đang rơi.",
+      },
+      {
+        id: "rabbit",
+        en: "rabbit",
+        vi: "con thỏ",
+        sentence: "The rabbit can hop.",
+        sentenceVi: "Con thỏ nhảy được.",
+      },
+      {
+        id: "apple",
+        en: "apple",
+        vi: "quả táo",
+        sentence: "I like the red apple.",
+        sentenceVi: "Bé thích quả táo đỏ.",
+      },
     ],
     movements: [
-      { id: "stretch-sun", vi: "Vươn hai tay lên cao như ông mặt trời!", en: "Stretch up high like the sun!", quietVi: "Giơ hai bàn tay lên, xòe ngón như tia nắng." },
-      { id: "hop-rabbit", vi: "Nhảy nhẹ nhàng như chú thỏ, ba cái nhé!", en: "Hop like a rabbit!", quietVi: "Làm tai thỏ bằng hai ngón tay và gật đầu." },
-      { id: "rain-fingers", vi: "Làm mưa rơi bằng các ngón tay, từ trên xuống!", en: "Make the rain fall!", quietVi: "Gõ nhẹ ngón tay lên bàn như mưa rơi." },
+      {
+        id: "stretch-sun",
+        vi: "Vươn hai tay lên cao như ông mặt trời!",
+        en: "Stretch up high like the sun!",
+        quietVi: "Giơ hai bàn tay lên, xòe ngón như tia nắng.",
+      },
+      {
+        id: "hop-rabbit",
+        vi: "Nhảy nhẹ nhàng như chú thỏ, ba cái nhé!",
+        en: "Hop like a rabbit!",
+        quietVi: "Làm tai thỏ bằng hai ngón tay và gật đầu.",
+      },
+      {
+        id: "rain-fingers",
+        vi: "Làm mưa rơi bằng các ngón tay, từ trên xuống!",
+        en: "Make the rain fall!",
+        quietVi: "Gõ nhẹ ngón tay lên bàn như mưa rơi.",
+      },
     ],
     parentActivity: [
       "Cùng bé tìm một quả táo (hoặc hình quả táo) trong nhà và nói “apple”.",
@@ -73,15 +112,54 @@ export const ADVENTURES: Adventure[] = [
       "Hôm nay khu vườn mở tiệc! Nhưng những bông hoa chưa có màu. Bé nghe tên màu tiếng Anh và tô màu cho khu vườn nhé!",
     sceneVi: "Khu vườn rực rỡ sắc màu! Bé chạm vào từng màu để nghe lại nhé.",
     words: [
-      { id: "red", en: "red", vi: "màu đỏ", sentence: "The flower is red.", sentenceVi: "Bông hoa màu đỏ." },
-      { id: "blue", en: "blue", vi: "màu xanh dương", sentence: "The sky is blue.", sentenceVi: "Bầu trời màu xanh dương." },
-      { id: "yellow", en: "yellow", vi: "màu vàng", sentence: "The sun is yellow.", sentenceVi: "Mặt trời màu vàng." },
-      { id: "green", en: "green", vi: "màu xanh lá", sentence: "The leaf is green.", sentenceVi: "Chiếc lá màu xanh lá." },
+      {
+        id: "red",
+        en: "red",
+        vi: "màu đỏ",
+        sentence: "The flower is red.",
+        sentenceVi: "Bông hoa màu đỏ.",
+      },
+      {
+        id: "blue",
+        en: "blue",
+        vi: "màu xanh dương",
+        sentence: "The sky is blue.",
+        sentenceVi: "Bầu trời màu xanh dương.",
+      },
+      {
+        id: "yellow",
+        en: "yellow",
+        vi: "màu vàng",
+        sentence: "The sun is yellow.",
+        sentenceVi: "Mặt trời màu vàng.",
+      },
+      {
+        id: "green",
+        en: "green",
+        vi: "màu xanh lá",
+        sentence: "The leaf is green.",
+        sentenceVi: "Chiếc lá màu xanh lá.",
+      },
     ],
     movements: [
-      { id: "touch-red", vi: "Tìm và chạm vào một thứ màu đỏ quanh bé!", en: "Touch something red!", quietVi: "Chỉ tay vào một thứ màu đỏ quanh bé." },
-      { id: "spin-rainbow", vi: "Xoay một vòng thật chậm như cầu vồng!", en: "Turn around slowly!", quietVi: "Vẽ cầu vồng trên không bằng ngón tay." },
-      { id: "clap-colors", vi: "Vỗ tay bốn cái cho bốn màu nhé!", en: "Clap four times!", quietVi: "Vỗ tay thật nhẹ bốn cái." },
+      {
+        id: "touch-red",
+        vi: "Tìm và chạm vào một thứ màu đỏ quanh bé!",
+        en: "Touch something red!",
+        quietVi: "Chỉ tay vào một thứ màu đỏ quanh bé.",
+      },
+      {
+        id: "spin-rainbow",
+        vi: "Xoay một vòng thật chậm như cầu vồng!",
+        en: "Turn around slowly!",
+        quietVi: "Vẽ cầu vồng trên không bằng ngón tay.",
+      },
+      {
+        id: "clap-colors",
+        vi: "Vỗ tay bốn cái cho bốn màu nhé!",
+        en: "Clap four times!",
+        quietVi: "Vỗ tay thật nhẹ bốn cái.",
+      },
     ],
     parentActivity: [
       "Bày 4 đồ vật đỏ, xanh dương, vàng, xanh lá. Bố mẹ nói tên màu, bé chỉ đồ vật.",
@@ -97,15 +175,54 @@ export const ADVENTURES: Adventure[] = [
       "Tu tu! Chuyến tàu sắp chạy qua khu vườn. Các bạn thú đang chờ lên tàu. Bé nghe tên tiếng Anh và mời đúng bạn lên tàu nhé!",
     sceneVi: "Đoàn tàu đã đầy bạn thú! Bé chạm vào từng bạn để nghe lại nhé.",
     words: [
-      { id: "cat", en: "cat", vi: "con mèo", sentence: "The cat says meow.", sentenceVi: "Con mèo kêu meo meo." },
-      { id: "dog", en: "dog", vi: "con chó", sentence: "The dog can run.", sentenceVi: "Con chó chạy được." },
-      { id: "bird", en: "bird", vi: "con chim", sentence: "The bird can fly.", sentenceVi: "Con chim bay được." },
-      { id: "elephant", en: "elephant", vi: "con voi", sentence: "The elephant is big.", sentenceVi: "Con voi thật to." },
+      {
+        id: "cat",
+        en: "cat",
+        vi: "con mèo",
+        sentence: "The cat says meow.",
+        sentenceVi: "Con mèo kêu meo meo.",
+      },
+      {
+        id: "dog",
+        en: "dog",
+        vi: "con chó",
+        sentence: "The dog can run.",
+        sentenceVi: "Con chó chạy được.",
+      },
+      {
+        id: "bird",
+        en: "bird",
+        vi: "con chim",
+        sentence: "The bird can fly.",
+        sentenceVi: "Con chim bay được.",
+      },
+      {
+        id: "elephant",
+        en: "elephant",
+        vi: "con voi",
+        sentence: "The elephant is big.",
+        sentenceVi: "Con voi thật to.",
+      },
     ],
     movements: [
-      { id: "fly-bird", vi: "Dang tay bay như chú chim!", en: "Fly like a bird!", quietVi: "Vẫy hai bàn tay như đôi cánh." },
-      { id: "elephant-walk", vi: "Đi chậm và nặng như chú voi, vung vòi nhé!", en: "Walk like an elephant!", quietVi: "Dùng tay làm vòi voi và đung đưa." },
-      { id: "train-chug", vi: "Làm đoàn tàu: xoay tay và nói “tu tu”!", en: "Choo choo like a train!", quietVi: "Xoay tròn hai tay trước ngực như bánh tàu." },
+      {
+        id: "fly-bird",
+        vi: "Dang tay bay như chú chim!",
+        en: "Fly like a bird!",
+        quietVi: "Vẫy hai bàn tay như đôi cánh.",
+      },
+      {
+        id: "elephant-walk",
+        vi: "Đi chậm và nặng như chú voi, vung vòi nhé!",
+        en: "Walk like an elephant!",
+        quietVi: "Dùng tay làm vòi voi và đung đưa.",
+      },
+      {
+        id: "train-chug",
+        vi: "Làm đoàn tàu: xoay tay và nói “tu tu”!",
+        en: "Choo choo like a train!",
+        quietVi: "Xoay tròn hai tay trước ngực như bánh tàu.",
+      },
     ],
     parentActivity: [
       "Đóng vai con vật: bố mẹ nói “cat”, bé kêu “meo”; nói “dog”, bé kêu “gâu”.",
@@ -128,3 +245,38 @@ export const AGE_LABELS: Record<AgeBand, string> = {
   "4-5": "4–5 tuổi",
   "5-6": "5–6 tuổi",
 };
+
+/** Curated roadmap metadata; vocabulary is always read from ADVENTURES. */
+export const LEARNING_WORLDS = [
+  {
+    id: "garden",
+    name: "Sunny Garden",
+    title: "Khu vườn thức giấc",
+    description: "Gọi nắng lên, đón mưa về và làm quen những người bạn nhỏ.",
+    image: "/illustrations/garden-card.webp",
+    badge: "KHU VƯỜN 1",
+  },
+  {
+    id: "colors",
+    name: "Rainbow Meadow",
+    title: "Đồng cỏ cầu vồng",
+    description: "Mang những sắc màu rực rỡ đến từng góc nhỏ của khu vườn.",
+    image: "/illustrations/colors-card.webp",
+    badge: "KHU VƯỜN 2",
+  },
+  {
+    id: "train",
+    name: "Animal Express",
+    title: "Chuyến tàu bạn thú",
+    description: "Lên tàu cùng những người bạn đáng yêu và khám phá tiếng Anh.",
+    image: "/illustrations/animals-card.webp",
+    badge: "KHU VƯỜN 3",
+  },
+] as const;
+
+export function roadmapKey(wordId: string) {
+  return `path-v1-${wordId}`;
+}
+export function isRoadmapExperience(adventureId: string, key: string) {
+  return getAdventure(adventureId)?.words.some((w) => roadmapKey(w.id) === key) ?? false;
+}

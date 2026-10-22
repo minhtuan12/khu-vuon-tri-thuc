@@ -11,6 +11,6 @@
 
 ## Project rules
 - Lesson vocabulary/movements live only in `src/lib/content.ts`; AI proposals must pass `validateProposal` in `src/lib/plan.ts` (keeps AI inside curated content).
-- Progress is local-first (`src/lib/progress.ts`) and synced to `lesson_sessions` when signed in (guest play must never need a network).
+- Progress is local-first (`src/lib/progress.ts`) and synced to `learning_progress` when signed in; legacy `lesson_sessions` is imported into shared play (guest play must never need a network).
 - All speech goes through `src/lib/speech.ts` (single queue, cancel on navigation/mute, no fake voices).
 - Teacher AI runs in `src/lib/ai.functions.ts` behind `requireSupabaseAuth` with a per-user hourly limit from `ai_requests`.

@@ -4,6 +4,9 @@ import { getAdventure, optionsForAge, type AdventureId, type AgeBand } from "./c
 export type Duration = "short" | "standard";
 
 export interface LessonPlan {
+  experienceId?: string;
+  contentVersion?: number;
+  experience?: import("./experiences").ExperienceProposal;
   adventureId: AdventureId;
   age: AgeBand;
   wordIds: string[]; // order used in "listen" stage; always from curated list
@@ -37,7 +40,10 @@ export const aiProposalSchema = z.object({
 });
 
 /** Deterministic, curated plan. Used as default and as the labelled "Gợi ý có sẵn" fallback. */
-export function deterministicPlan(req: PlanRequest, source: LessonPlan["source"] = "fallback"): LessonPlan {
+export function deterministicPlan(
+  req: PlanRequest,
+  source: LessonPlan["source"] = "fallback",
+): LessonPlan {
   const adv = getAdventure(req.adventureId)!;
   const count = req.duration === "short" ? 3 : 4;
   return {
@@ -65,9 +71,12 @@ export function validateProposal(raw: unknown, req: PlanRequest): LessonPlan {
   const adv = getAdventure(req.adventureId)!;
   const allowed = new Set(adv.words.map((w) => w.id));
   const count = req.duration === "short" ? 3 : 4;
-  const words = Array.from(new Set(p.wordIds.map((w) => w.trim().toLowerCase()))).filter((w) => allowed.has(w));
+  const words = Array.from(new Set(p.wordIds.map((w) => w.trim().toLowerCase()))).filter((w) =>
+    allowed.has(w),
+  );
   if (words.length < count) throw new Error("AI proposal used words outside the curated list");
-  if (!adv.movements.some((m) => m.id === p.movementId)) throw new Error("AI proposal used an unapproved movement");
+  if (!adv.movements.some((m) => m.id === p.movementId))
+    throw new Error("AI proposal used an unapproved movement");
   const tip = p.teacherTipVi.replace(/\s+/g, " ").trim().slice(0, 240);
   return {
     ...deterministicPlan(req, "ai"),

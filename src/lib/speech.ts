@@ -18,16 +18,30 @@ let voices: SpeechSynthesisVoice[] = [];
 let voicesReady = false;
 let speaking = false;
 let token = 0;
+let finishCurrent: (() => void) | null = null;
+let observingVoices = false;
 const listeners = new Set<() => void>();
 const emit = () => listeners.forEach((l) => l());
 
 export function isSupported() {
-  return typeof window !== "undefined" && "speechSynthesis" in window && "SpeechSynthesisUtterance" in window;
+  return (
+    typeof window !== "undefined" &&
+    "speechSynthesis" in window &&
+    "SpeechSynthesisUtterance" in window
+  );
 }
 
 /** Load voices, waiting briefly for the async voiceschanged event. */
 export function loadVoices(timeoutMs = 1500): Promise<SpeechSynthesisVoice[]> {
   if (!isSupported()) return Promise.resolve([]);
+  if (!observingVoices) {
+    observingVoices = true;
+    window.speechSynthesis.addEventListener("voiceschanged", () => {
+      voices = window.speechSynthesis.getVoices();
+      voicesReady = true;
+      emit();
+    });
+  }
   const now = window.speechSynthesis.getVoices();
   if (now.length) {
     voices = now;
@@ -36,7 +50,11 @@ export function loadVoices(timeoutMs = 1500): Promise<SpeechSynthesisVoice[]> {
     return Promise.resolve(voices);
   }
   return new Promise((resolve) => {
+    let finished = false;
     const done = () => {
+      if (finished) return;
+      finished = true;
+      clearTimeout(timeout);
       voices = window.speechSynthesis.getVoices();
       voicesReady = true;
       window.speechSynthesis.removeEventListener("voiceschanged", done);
@@ -44,8 +62,16 @@ export function loadVoices(timeoutMs = 1500): Promise<SpeechSynthesisVoice[]> {
       resolve(voices);
     };
     window.speechSynthesis.addEventListener("voiceschanged", done);
-    setTimeout(done, timeoutMs);
+    const timeout = setTimeout(done, timeoutMs);
   });
+}
+
+// Web Speech exposes no gender field. These are recognizable installed voice names,
+// not a guarantee for every platform. Never simulate a female voice by raising pitch.
+export function isLikelyFemale(voice: SpeechSynthesisVoice) {
+  return /\b(female|samantha|zira|aria|jenny|sonia|susan|hazel|karen|victoria|moira|tessa|salli|joanna|ava|emma|michelle|libby)\b/i.test(
+    voice.name,
+  );
 }
 
 export function voicesFor(lang: Lang): SpeechSynthesisVoice[] {
@@ -60,7 +86,14 @@ export function pickVoice(lang: Lang): SpeechSynthesisVoice | null {
   const s = getSettings();
   const chosen = lang === "vi" ? s.viVoiceURI : s.enVoiceURI;
   const list = voicesFor(lang);
-  return list.find((v) => v.voiceURI === chosen) ?? list.find((v) => v.localService) ?? list[0] ?? null;
+  const female = lang === "en" ? list.filter(isLikelyFemale) : [];
+  const preferred = female.length ? female : list;
+  return (
+    preferred.find((v) => v.voiceURI === chosen) ??
+    preferred.find((v) => v.localService) ??
+    preferred[0] ??
+    null
+  );
 }
 
 export function voiceStatus(lang: Lang): VoiceStatus {
@@ -72,6 +105,7 @@ export function voiceStatus(lang: Lang): VoiceStatus {
 export function cancelSpeech() {
   token++;
   if (isSupported()) window.speechSynthesis.cancel();
+  finishCurrent?.();
   if (speaking) {
     speaking = false;
     emit();
@@ -93,6 +127,7 @@ export async function speak(segments: Segment[]): Promise<void> {
   emit();
   for (const seg of segments) {
     if (my !== token) return;
+    if (seg.lang !== "en") continue; // English-only audio, including legacy approved stories.
     const voice = pickVoice(seg.lang);
     if (!voice) continue; // never pretend: no matching voice, no audio for this language
     await new Promise<void>((resolve) => {
@@ -100,11 +135,23 @@ export async function speak(segments: Segment[]): Promise<void> {
       u.voice = voice;
       u.lang = voice.lang || LANG_TAG[seg.lang];
       u.rate = RATE[seg.lang];
-      u.pitch = seg.lang === "en" ? 1.1 : 1.05;
-      u.onend = () => resolve();
-      u.onerror = () => resolve();
+      u.pitch = 1;
+      const done = () => {
+        clearTimeout(timeout);
+        if (finishCurrent === done) finishCurrent = null;
+        resolve();
+      };
+      finishCurrent = done;
+      u.onend = done;
+      u.onerror = done;
       // Safety net: some engines never fire onend.
-      setTimeout(resolve, 2500 + seg.text.length * 120);
+      const timeout = setTimeout(
+        () => {
+          if (my === token) window.speechSynthesis.cancel();
+          done();
+        },
+        2500 + seg.text.length * 120,
+      );
       window.speechSynthesis.speak(u);
     });
   }
@@ -122,7 +169,11 @@ function subscribe(cb: () => void) {
 }
 
 export function useSpeaking() {
-  return useSyncExternalStore(subscribe, () => speaking, () => false);
+  return useSyncExternalStore(
+    subscribe,
+    () => speaking,
+    () => false,
+  );
 }
 
 export function useVoiceStatus() {

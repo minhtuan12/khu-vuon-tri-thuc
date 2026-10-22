@@ -161,7 +161,12 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      reserve_ai_request: { Args: Record<string, never>; Returns: boolean }
+      learning_snapshot: { Args: Record<string, never>; Returns: Json }
+      save_learning_context: { Args: { item: Json }; Returns: undefined }
+      save_learning_progress: { Args: { context_key: string; adventure: string; experience: string; item: Json }; Returns: undefined }
+      save_learning_event: { Args: { item: Json }; Returns: undefined }
+      approve_learning_experience: { Args: { item: Json }; Returns: Json }
     }
     Enums: {
       [_ in never]: never
