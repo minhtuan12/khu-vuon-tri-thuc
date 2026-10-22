@@ -240,15 +240,21 @@ export function restoreLearningData(raw: string) {
   const backup = z
     .object({ app: z.literal("kvtt"), version: z.literal(2), data: dataSchema })
     .parse(JSON.parse(raw));
-  const known = new Set(data.experiences.map((e) => e.id));
+  const known = new Map(
+    (userId ? data.experiences : backup.data.experiences).map((e) => [e.id, e]),
+  );
+  for (const experience of backup.data.experiences)
+    validateExperience(experience.proposal, experience.request);
+  if (userId && backup.data.experiences.some((e) => !known.has(e.id)))
+    throw new Error("Trải nghiệm chưa được tài khoản này duyệt");
   for (const [key, p] of Object.entries(backup.data.progress)) {
     const [context, adv, experience] = key.split("/");
     if (
       !getAdventure(adv!) ||
       (context !== "shared" && !backup.data.contexts.some((c) => c.id === context)) ||
       (experience !== "standard" &&
-        !known.has(experience!) &&
-        !isRoadmapExperience(adv!, experience!)) ||
+        !isRoadmapExperience(adv!, experience!) &&
+        known.get(experience!)?.request.adventureId !== adv) ||
       p.wordsSeen.some((w) => !getAdventure(adv!)!.words.some((v) => v.id === w))
     )
       throw new Error("Bản sao lưu chứa tiến độ hoặc trải nghiệm không hợp lệ");
@@ -259,7 +265,10 @@ export function restoreLearningData(raw: string) {
       (e.wordId && !getAdventure(e.adventureId)!.words.some((w) => w.id === e.wordId))
     )
       throw new Error("Sự kiện không hợp lệ");
-  data = { ...backup.data, experiences: data.experiences };
+  data = {
+    ...backup.data,
+    experiences: userId ? data.experiences : backup.data.experiences,
+  };
   activeContext = "shared";
   persist();
   void syncNow();

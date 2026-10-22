@@ -9,13 +9,20 @@ describe("learning database boundaries", () => {
   it("migrates, isolates two owners, enforces context references and caps quota", async () => {
     const db = new PGlite();
     try {
-      await db.exec(`CREATE ROLE authenticated; CREATE ROLE service_role; CREATE SCHEMA auth;
+      await db.exec(`CREATE ROLE anon; CREATE ROLE authenticated; CREATE ROLE service_role; CREATE SCHEMA auth;
       CREATE TABLE auth.users(id uuid PRIMARY KEY,raw_user_meta_data jsonb DEFAULT '{}');
       CREATE FUNCTION auth.uid() RETURNS uuid LANGUAGE sql STABLE AS $$ SELECT nullif(current_setting('request.jwt.claim.sub',true),'')::uuid $$;
       GRANT USAGE ON SCHEMA auth TO authenticated; GRANT EXECUTE ON FUNCTION auth.uid() TO authenticated;`);
-      await db.exec(readFileSync("supabase/migrations/0000_init_garden.sql", "utf8"));
-      await db.exec(readFileSync("supabase/migrations/0001_learning_experiences.sql", "utf8"));
-      await db.exec(readFileSync("supabase/migrations/0002_learning_roadmap.sql", "utf8"));
+      await db.exec(readFileSync("supabase/migrations/20261022064628_init_garden.sql", "utf8"));
+      await db.exec(readFileSync("supabase/migrations/20261022064636_learning_experiences.sql", "utf8"));
+      await db.exec(readFileSync("supabase/migrations/20261022064642_learning_roadmap.sql", "utf8"));
+      await db.exec(readFileSync("supabase/migrations/20261022064750_harden_rpc_grants.sql", "utf8"));
+      const permissions = await db.query<{
+        anon: boolean;
+        authenticated: boolean;
+      }>(`SELECT has_function_privilege('anon','public.save_learning_progress(text,text,text,jsonb)','EXECUTE') AS anon,
+        has_function_privilege('authenticated','public.save_learning_progress(text,text,text,jsonb)','EXECUTE') AS authenticated`);
+      expect(permissions.rows[0]).toEqual({ anon: false, authenticated: true });
       const a = "11111111-1111-4111-8111-111111111111",
         b = "22222222-2222-4222-8222-222222222222",
         c = "33333333-3333-4333-8333-333333333333";
@@ -37,6 +44,32 @@ describe("learning database boundaries", () => {
         "standard",
         JSON.stringify({ stage: 1, completed: true, wordsSeen: ["rain"], updatedAt: 1 }),
       ]);
+      const eventId = crypto.randomUUID();
+      await db.query("SELECT public.save_learning_event($1::jsonb)", [
+        JSON.stringify({
+          id: eventId,
+          contextId: c,
+          adventureId: "garden",
+          experienceId: "standard",
+          wordId: "sun",
+          kind: "attempt",
+          correct: true,
+          at: 3,
+        }),
+      ]);
+      const snapshot = await db.query<{
+        snapshot: {
+          contexts: { id: string }[];
+          progress: Record<string, { stage: number; completed: boolean }>;
+          events: { id: string }[];
+        };
+      }>("SELECT public.learning_snapshot() AS snapshot");
+      expect(snapshot.rows[0]!.snapshot.contexts[0]!.id).toBe(c);
+      expect(snapshot.rows[0]!.snapshot.progress[`${c}/garden/standard`]).toMatchObject({
+        stage: 2,
+        completed: true,
+      });
+      expect(snapshot.rows[0]!.snapshot.events[0]!.id).toBe(eventId);
       const rows = await db.query<{
         payload: { stage: number; completed: boolean; wordsSeen: string[] };
       }>("SELECT payload FROM learning_progress");
@@ -83,6 +116,15 @@ describe("learning database boundaries", () => {
       await db.exec(`SET request.jwt.claim.sub='${b}';`);
       expect((await db.query("SELECT * FROM learning_progress")).rows).toHaveLength(0);
       expect((await db.query("SELECT * FROM approved_experiences")).rows).toHaveLength(0);
+      const otherSnapshot = await db.query<{ snapshot: { contexts: unknown[]; events: unknown[]; progress: object } }>(
+        "SELECT public.learning_snapshot() AS snapshot",
+      );
+      expect(otherSnapshot.rows[0]!.snapshot).toEqual({
+        contexts: [],
+        experiences: [],
+        progress: {},
+        events: [],
+      });
       await expect(
         db.query("SELECT save_learning_progress($1,$2,$3,$4::jsonb)", [
           c,

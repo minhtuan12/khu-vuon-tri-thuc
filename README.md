@@ -19,7 +19,7 @@ bun run test           # chạy kiểm thử
 Xem `.env.example`. Chỉ khóa **công khai** nằm ở phía trình duyệt. `LOVABLE_API_KEY` (cho AI) chỉ đọc trên máy chủ, không bao giờ đưa vào mã phía trình duyệt.
 
 ## Cơ sở dữ liệu
-PostgreSQL được quản lý (Lovable Cloud). Lược đồ + chính sách bảo mật theo từng người dùng (RLS) ở `supabase/migrations/0000_init_garden.sql`:
+PostgreSQL được quản lý (Lovable Cloud). Lược đồ + chính sách bảo mật theo từng người dùng (RLS) ở `supabase/migrations/20261022064628_init_garden.sql`:
 - `profiles`, `learner_profiles` (chỉ biệt danh, avatar, nhóm tuổi), `lesson_sessions`, `observations`, `ai_requests` (giới hạn tần suất AI).
 - Mỗi bảng chỉ cho chủ sở hữu (`auth.uid()`) đọc/ghi. Không có chính sách công khai.
 

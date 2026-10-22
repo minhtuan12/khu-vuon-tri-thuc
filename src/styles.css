@@ -142,6 +142,8 @@
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family: var(--font-sans);
+    font-size: 16px;
+    line-height: 1.5;
   }
   h1, h2, h3 {
     font-family: var(--font-display);
@@ -257,14 +259,14 @@
 .story-section__head h2 { font-family: var(--font-display); font-size: clamp(21px,2vw,29px); line-height: 1.1; font-weight: 900; }
 .story-section__head span { color: #46648a; font-size: 14px; font-weight: 800; }
 .adventure-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: clamp(13px,1.8vw,25px); }
-.adventure-card { display: flex; flex-direction: column; min-width: 0; height: clamp(320px,29vw,365px); overflow: hidden; border: 5px solid rgb(255 255 255 / .95); border-radius: 33px; text-decoration: none; box-shadow: 0 12px 24px rgb(57 94 145 / .16), inset 0 -4px 0 rgb(255 255 255 / .5); transition: transform .18s, box-shadow .18s; }
+.adventure-card { display: flex; flex-direction: column; min-width: 0; height: clamp(420px,34vw,460px); overflow: hidden; border: 5px solid rgb(255 255 255 / .95); border-radius: 33px; text-decoration: none; box-shadow: 0 12px 24px rgb(57 94 145 / .16), inset 0 -4px 0 rgb(255 255 255 / .5); transition: transform .18s, box-shadow .18s; }
 .adventure-card:hover { transform: translateY(-5px); box-shadow: 0 18px 30px rgb(57 94 145 / .2); }
 .adventure-card:focus-visible { outline-offset: 5px; }
 .adventure-card--garden { background: #fff1a7; }
 .adventure-card--colors { background: #ffd4e7; }
 .adventure-card--train { background: #e4d9ff; }
-.adventure-card__image { display: block; width: 100%; height: 60%; flex: none; object-fit: cover; object-position: center 41%; }
-.adventure-card__copy { display: flex; flex: 1; flex-direction: column; align-items: center; justify-content: space-between; gap: 3px; padding: 7px 12px 10px; color: #1e416b; text-align: center; }
+.adventure-card__image { display: block; width: 100%; height: 64%; flex: none; object-fit: cover; object-position: center 36%; }
+.adventure-card__copy { display: flex; flex: 1; flex-direction: column; align-items: center; justify-content: space-between; gap: 3px; padding: 14px 12px 10px; color: #1e416b; text-align: center; }
 .adventure-card__title { font-family: var(--font-display); font-size: clamp(22px,1.8vw,27px); font-weight: 900; line-height: 1.08; }
 .adventure-card__detail { font-size: 13px; font-weight: 800; opacity: .82; }
 .adventure-card__button { display: inline-flex; min-height: 48px; width: min(100%,270px); align-items: center; justify-content: center; gap: 10px; border-radius: 999px; color: white; font-family: var(--font-display); font-size: 19px; font-weight: 900; box-shadow: inset 0 -4px 0 rgb(0 0 0 / .12), 0 5px 12px rgb(24 69 112 / .12); }
@@ -293,7 +295,7 @@
 .storybook-page__intro h1 { font-family: var(--font-display); font-weight: 900; font-size: clamp(32px,4vw,54px); line-height: 1.08; color: #194c79; }
 .storybook-page__intro p { font-weight: 800; color: #4b688c; }
 .storybook-page__eyebrow { display: inline-block; margin-bottom: 9px; padding: 7px 15px; border-radius: 999px; background: white; color: #168d9d; font-size: 12px; font-weight: 1000; letter-spacing: .08em; }
-.adventure-grid--page .adventure-card { height: clamp(390px,40vw,480px); }
+.adventure-grid--page .adventure-card { height: clamp(460px,44vw,560px); }
 .storybook-lesson { background: linear-gradient(180deg,#c7efff 0%,#e8faff 68%,#fffdea 100%); }
 .lesson-illustration { position: absolute; z-index: 0; top: 5%; right: max(2%,calc((100vw - 1150px)/2)); width: clamp(165px,20vw,260px); height: clamp(185px,26vw,310px); object-fit: cover; object-position: center 40%; border: 5px solid white; border-radius: 35px; box-shadow: 0 16px 30px rgb(39 105 142 / .19); transform: rotate(4deg); pointer-events: none; }
 .storybook-lesson main > :not(.lesson-illustration) { position: relative; z-index: 1; }
@@ -327,12 +329,12 @@
   .story-section__head { display: block; }
   .story-section__head span { font-size: 12px; }
   .adventure-grid { display: flex; gap: 12px; overflow-x: auto; padding: 4px 3px 17px; scroll-snap-type: x mandatory; scrollbar-width: thin; }
-  .adventure-card, .adventure-grid--page .adventure-card { height: 355px; flex: 0 0 min(75vw,285px); scroll-snap-align: center; }
+  .adventure-card, .adventure-grid--page .adventure-card { height: 430px; flex: 0 0 min(75vw,285px); scroll-snap-align: center; }
   .adventure-card__title { font-size: 21px; }
   .quick-grid { grid-template-columns: 1fr; gap: 8px; }
   .quick-card { min-height: 69px; }
   .bottom-dock { width: calc(100vw - 18px); justify-content: space-around; padding: 5px; }
-  .bottom-dock__item { flex-direction: column; gap: 1px; min-height: 55px; min-width: 0; flex: 1; padding: 4px 2px; font-size: 10px; line-height: 1; }
+  .bottom-dock__item { flex-direction: column; gap: 2px; min-height: 55px; min-width: 0; flex: 1; padding: 4px 2px; font-size: 12px; line-height: 1.2; }
   .bottom-dock__item svg { width: 20px; height: 20px; }
   .storybook-page__main { padding-top: 22px; }
 }

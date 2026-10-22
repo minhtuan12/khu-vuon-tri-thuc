@@ -17,7 +17,7 @@ Cài đặt có nghe thử/chọn giọng. Không nhận diện được giọng
 
 ## Database
 
-Áp dụng `supabase/migrations/0002_learning_roadmap.sql` sau 0001 trước khi đồng bộ lộ trình trên Supabase thật. Migration cho phép khóa curated `path-v1-*`, giữ RLS/quyền sở hữu và lịch sử. Chơi khách/lưu tại máy không cần migration online.
+Áp dụng `supabase/migrations/20261022064642_learning_roadmap.sql` sau migration `20261022064636` trước khi đồng bộ lộ trình trên Supabase thật. Migration cho phép khóa curated `path-v1-*`, giữ RLS/quyền sở hữu và lịch sử. Chơi khách/lưu tại máy không cần migration online.
 
 ## Kiểm tra và giới hạn
 
@@ -25,7 +25,7 @@ Cài đặt có nghe thử/chọn giọng. Không nhận diện được giọng
 - Database PGlite: migration, khóa sai thế giới bị từ chối, giữ RLS hai tài khoản.
 - Browser: nghe → người lớn bật mic → nói sai/Mầm mặt mếu/“Try again!” → nói gần đúng → tự qua bước tiếp theo; reload → đúng → hoàn thành; lưu offline; đổi thế giới; keyboard/Escape; lesson không tồn tại; thiếu giọng; mobile.
 - Ảnh tại `docs/previews/roadmap-*.png`. Voice giả lập kiểm chứng chọn voice/lang, không thay thế nghe thử trên thiết bị thật.
-- Chưa áp dụng migration trên Supabase thật; chưa tuyên bố kiểm chứng đồng bộ production hay chất lượng giọng trên mọi trình duyệt.
+- Đã áp dụng migration trên Supabase thật và kiểm thử RPC ghi/đọc cùng RLS trong giao dịch `ROLLBACK`; chưa kiểm chứng đồng bộ qua phiên đăng nhập trình duyệt hoặc chất lượng giọng trên mọi trình duyệt.
 
 ## Đối chiếu thiết kế
 

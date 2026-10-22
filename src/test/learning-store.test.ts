@@ -1,4 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
+import { fallbackExperience } from "@/lib/experiences";
 const rpc = vi.fn(async () => ({
   data: { contexts: [], experiences: [], progress: {}, events: [] },
   error: null,
@@ -66,6 +67,32 @@ describe("local-first learning store", () => {
     s.recordProgress("garden", { stage: 2 });
     expect(() => s.restoreLearningData('{"app":"kvtt","version":2,"data":{}}')).toThrow();
     expect(s.getProgress("garden")?.stage).toBe(2);
+  });
+  it("restores approved experiences together with their progress", async () => {
+    const s = await import("@/lib/progress");
+    const request = {
+      adventureId: "garden" as const,
+      age: "4-5" as const,
+      duration: "standard" as const,
+      movement: true,
+    };
+    const experience = {
+      id: crypto.randomUUID(),
+      version: 1 as const,
+      request,
+      proposal: fallbackExperience(request, "story"),
+      source: "fallback" as const,
+      approvedAt: new Date().toISOString(),
+    };
+    s.cacheExperience(experience);
+    s.recordProgress("garden", { stage: 2, wordsSeen: ["sun"] }, experience.id);
+    const backup = s.exportLearningData();
+    localStorage.clear();
+    vi.resetModules();
+    const restored = await import("@/lib/progress");
+    restored.restoreLearningData(backup);
+    expect(restored.getExperience(experience.id)?.id).toBe(experience.id);
+    expect(restored.getProgress("garden", experience.id)?.stage).toBe(2);
   });
   it("records separate experience progress and idempotent event IDs", async () => {
     const s = await import("@/lib/progress");

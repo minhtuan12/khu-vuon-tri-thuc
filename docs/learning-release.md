@@ -12,7 +12,7 @@
 
 ## Vận hành
 
-1. Sao lưu database và kiểm tra migration `supabase/migrations/0001_learning_experiences.sql` trên môi trường thử nghiệm trước khi phát hành. Không xóa bảng lịch sử cũ.
+1. Sao lưu database và kiểm tra migration `supabase/migrations/20261022064636_learning_experiences.sql` trên môi trường thử nghiệm trước khi phát hành. Không xóa bảng lịch sử cũ.
 2. Áp dụng migration qua quy trình Supabase của dự án; cập nhật cấu hình gateway đang dùng trên server, không đưa khóa server vào biến frontend.
 3. Hai cờ server `FEATURE_STORY_AI` và `FEATURE_REVIEW_AI`: đặt chuỗi `false` để tắt tương ứng. Nên tắt trên môi trường thật cho đến khi nghiệm thu luồng đăng nhập/duyệt.
 4. Đăng nhập bằng hai tài khoản thử: tạo hồ sơ riêng, duyệt một bài, kiểm tra tài khoản kia không đọc/ghi được dữ liệu hoặc tham chiếu hồ sơ đó.
@@ -26,7 +26,7 @@
 - Playwright: luồng desktop/mobile tạo hồ sơ → bài có sẵn → preview không ghi → bài thật ghi hoạt động; ảnh tại `docs/previews`.
 - Production build: đạt; còn cảnh báo deprecation `inputValidator` và cấu hình đường dẫn Vite.
 - ESLint các file triển khai: đạt. Lint toàn repository chưa đạt (nhiều lỗi định dạng/CRLF và lỗi ngoài phạm vi); không định dạng lại toàn bộ để tránh thay đổi không liên quan.
-- Chưa chạy migration trên Supabase thật, chưa kiểm chứng gateway AI và duyệt bằng phiên đăng nhập thật. Test PGlite không thay thế kiểm thử trên dịch vụ Supabase.
+- Đã áp dụng bốn migration có phiên bản `20261022064628`–`20261022064750` trên project Supabase `sdhbiiljdwpdaikxekrv`. Kiểm thử trực tiếp bằng giao dịch `ROLLBACK` đã xác nhận ghi/đọc hồ sơ, tiến độ, sự kiện, quan sát, bản duyệt và giới hạn 20 lượt AI/giờ; tài khoản thứ hai không đọc được dữ liệu của tài khoản thứ nhất. Chưa kiểm chứng gateway AI và luồng đăng nhập qua giao diện bằng tài khoản thật.
 
 ## Giới hạn cần nghiệm thu tiếp
 
